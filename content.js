@@ -6,7 +6,7 @@ document.addEventListener('click', function (event) {
     id: element.id,
     uniq_id: element.getAttribute('data-uniq-id')
   };
-  alert(JSON.stringify(attributes, null, 2));
+  showPopup(attributes);
 }, true);
 
 function getXPath(element) {
@@ -28,4 +28,24 @@ function getXPath(element) {
       ix++;
     }
   }
+}
+
+function showPopup(attributes) {
+  let popup = document.createElement('div');
+  popup.style.position = 'fixed';
+  popup.style.bottom = '10px';
+  popup.style.right = '10px';
+  popup.style.padding = '10px';
+  popup.style.backgroundColor = 'white';
+  popup.style.border = '1px solid black';
+  popup.style.zIndex = '10000';
+  popup.innerHTML = `
+    <strong>Element Attributes:</strong>
+    <pre>${JSON.stringify(attributes, null, 2)}</pre>
+    <button id="closePopup">Close</button>
+  `;
+  document.body.appendChild(popup);
+  document.getElementById('closePopup').addEventListener('click', () => {
+    document.body.removeChild(popup);
+  });
 }
